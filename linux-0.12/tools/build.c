@@ -1,38 +1,11 @@
 /*
- *  linux/tools/build.c
- *
- *  (C) 1991  Linus Torvalds
- */
-
-/*
  * This file builds a disk-image from three different files:
- *
- * - bootsect: max 510 bytes of 8086 machine code, loads the rest
- * - setup: max 4 sectors of 8086 machine code, sets up system parm
- * - system: 80386 code for actual system
- *
- * It does some checking that all files are of the correct type, and
- * just writes the result to stdout, removing headers and padding to
- * the right amount. It also writes some system data to stderr.
- */
-/*
- * 该程序从三个不同的程序中创建磁盘映像文件:
- * 
- * - bootsect:	该文件的8086机器码最长为510字节，用于加载其他程序。
- * - setup:		该文件的8086机器码最长为4个磁盘扇区，用于设置系统参数。
- * - system:	实际系统的80386代码。
- * 
- * 该程序首先检查所有程序模块的类型是否正确，并将检查结果在终端上显示出来，然后删除模块头部并扩
- * 充到正确的长度。该程序也会将一些系统数据写到stderr。
- */
-/*
- * Changes by tytso to allow root device specification
- *
- * Added swap-device specification: Linux 20.12.91
- */
-/*
- * tytso对该程序作了修改，以允许指定根文件设备。
- * 添加了指定交换设备功能：Linus 20.12.91 
+ * - bootsect: max 510 bytes of 8086 machine code, loads the rest, 用于加载其他部分
+ * - setup: max 4 sectors(4个扇区) of 8086 machine code, sets up system parm
+ * - system: 80386 code for actual linux kernel
+ * It does some checking that all files are of the correct type（处在正确的类型）, and
+ * writes the result to stdout, removing headers（删除模块头部） and padding to　the right amount（扩充到正确的长度）.
+ * It also writes some system data to stderr.
  */
 
 #include <stdio.h>

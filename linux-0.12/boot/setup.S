@@ -1,4 +1,4 @@
-; 需要用 as86 编译本文件,　生产16位的代码(实模式下)
+; 需要用 as86 编译本文件, ld86连接本文件, 生产16位的代码(实模式下)
 ; 程序功能: Linux初始化设置
 
 ; setup.s is responsible for getting the system data from the BIOS,
@@ -67,8 +67,8 @@ start:
 	; 检测屏幕当前行列值。若显示卡是VGA卡，则请求用户选择显示行列值
 	mov	ax,#0x5019  ; 预设行列值(ah = 80列，al = 25行)
 	cmp	bl,#0x10
-	je	novga
-	call	chsvga
+	je	 novga
+	call chsvga
 novga:	
 	mov	[14],ax	
 ;;; 获取光标位置
@@ -81,11 +81,11 @@ novga:
 ;;; 取显示卡当前显示模式
 	mov	ah,#0x0f
 	int	0x10
-	mov	[4],bx		! bh = display page
-	mov	[6],ax		! al = video mode, ah = window width
+	mov	[4],bx		; bh = display page
+	mov	[6],ax		; al = video mode, ah = window width
 
 ;;; 复制两个硬盘的参数表：
-! Get hd0 data
+; Get hd0 data
 	mov	ax,#0x0000
 	mov	ds,ax
 	lds	si,[4*0x41]			; 取中断向量0x41的值，即hd0参数表的地址--ds:si
@@ -96,7 +96,7 @@ novga:
 	rep
 	movsb
 
-! Get hd1 data
+; Get hd1 data
 	mov	ax,#0x0000
 	mov	ds,ax
 	lds	si,[4*0x46]			; 取中断向量0x46的值，即hd1参数表的地址--ds:si
@@ -169,13 +169,13 @@ end_move:
 	out	#0x60,al
 	call	empty_8042
 
-! well, that went ok, I hope. Now we have to reprogram the interrupts :-(
-! we put them right after the intel-reserved hardware interrupts, at
-! int 0x20-0x2F. There they won't mess up anything. Sadly IBM really
-! messed this up with the original PC, and they haven't been able to
-! rectify it afterwards. Thus the bios puts interrupts at 0x08-0x0f,
-! which is used for the internal hardware interrupts as well. We just
-! have to reprogram the 8259's, and it isn't fun.
+; well, that went ok, I hope. Now we have to reprogram the interrupts :-(
+; we put them right after the intel-reserved hardware interrupts, at
+; int 0x20-0x2F. There they won't mess up anything. Sadly IBM really
+; messed this up with the original PC, and they haven't been able to
+; rectify it afterwards. Thus the bios puts interrupts at 0x08-0x0f,
+; which is used for the internal hardware interrupts as well. We just
+; have to reprogram the 8259's, and it isn't fun.
 ; 希望以上一切正常。现在我们必须重新对中断进行编程 :-(
 ; 我们将它们放在正好处于intel保留的硬件中断后面，在int 0x20 - 0x2F。
 ; 在那里它们不会引起冲突。不幸的是IBM在原PC机中搞糟了，以后也没有纠正过来。

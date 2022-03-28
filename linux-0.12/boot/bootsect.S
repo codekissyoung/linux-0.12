@@ -1,4 +1,4 @@
-; 需要用 as86 编译本文件,　生产16位的代码(实模式下)
+; 需要用 as86 编译本文件, ld86连接本文件, 生产16位的代码(实模式下)
 ; 程序功能: 启动引导扇区
 
 ; SYS_SIZE is the number of clicks(节) (16 bytes) to be loaded.
@@ -11,36 +11,12 @@
 #include <linux/config.h>
 SYSSIZE = DEF_SYSSIZE 	; 系统模块大小为0x3000节
 
-!
-!	bootsect.s (C) 1991 Linus Torvalds
-!	modified by Drew Eckhardt
-!
-! bootsect.s is loaded at 0x7c00 by the bios-startup routines, and moves
-! iself out of the way to address 0x90000, and jumps there.
-!
-! It then loads 'setup' directly after itself (0x90200), and the system
-! at 0x10000, using BIOS interrupts.
-!
-! NOTE! currently system is at most 8*65536 bytes long. This should be no
-! problem, even in the future. I want to keep it simple. This 512 kB
-! kernel size should be enough, especially as this doesn't contain the
-! buffer cache as in minix
-!
-! The loader has been made as simple as possible, and continuos
-! read errors will result in a unbreakable loop. Reboot by hand. It
-! loads pretty fast by getting whole sectors at a time whenever possible.
-
-; 以下是前面这些文字的翻译：
-; 	bootsect.s (C) 1991 Linus Torvalds 版权所有
-;	Drew Eckhardt 修改
-;
-; bootsect.s被BIOS启动子程序加载至0x7c00处，并将自己移到了地址0x90000处，并跳转至那里。
-;
-; 它然后使用BIOS中断将setup直接加载到自己的后面(0x90200)，并将system加载到地址0x10000处。
-;
+; bootsect.s被BIOS启动子程序加载至0x7c00处
+; 然后 bootsect.s 把自己移到了地址0x90000处
+; 它然后使用BIOS中断将setup直接加载到自己的后面(0x90200)
+; 并将system加载到地址0x10000处
 ; 注意! 目前的内核系统最大长度限制为512KB字节，即使是在将来这也应该没有问题的。我想让它保持简
 ; 单明了。这样512KB的最大内核长度应该足够了，尤其是这里没有像MINIX中一样包含缓冲区。
-;
 ; 加载程序已经做得够简单了，而且持续的读操作出错将导致死循环。就只能手工重启。
 ; 只要能够一次读取所有的扇区，加载过程可以做的很快的。
 

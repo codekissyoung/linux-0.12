@@ -1,4 +1,5 @@
 ; 需要用 as86 编译本文件,　生产16位的代码(实模式下)
+; 程序功能: 启动引导扇区
 
 ; SYS_SIZE is the number of clicks(节) (16 bytes) to be loaded.
 ; 0x3000 is 0x30000 bytes = 196KB

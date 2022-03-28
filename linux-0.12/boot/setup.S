@@ -1,27 +1,18 @@
+; 需要用 as86 编译本文件,　生产16位的代码(实模式下)
+; 程序功能: Linux初始化设置
+
 ; setup.s is responsible for getting the system data from the BIOS,
 ; and putting them into the appropriate places in system memory.
 ; both setup.s and system has been loaded by the bootblock.
+; This code asks the BIOS for memory/disk/other parameters, and
+; puts them in a "safe" place: 0x90000-0x901FF, ie where the
+; bootblock used to be. It is then up to the protected mode.
+; system will read them from there before the area is overwritten for buffer-blocks.
 
-! This code asks the bios for memory/disk/other parameters, and
-! puts them in a "safe" place: 0x90000-0x901FF, ie where the
-! boot-block used to be. It is then up to the protected mode
-! system to read them from there before the area is overwritten
-! for buffer-blocks.
-!
-;  setup.s负责从BIOS中获取系统数据，并将这些数据放到系统内存的适当地方。
-; 此时setup.s和system已经由bootsect引导块加载到内存中。
-;
-; 这段代码询问bios有关内存/磁盘/其它参数，并将这些参数放到一个“安全的”地
-; 方：0x90000 - 0x901FF，也即原来bootsect代码块曾经在的地方，然后在被缓冲
-; 块覆盖掉之前由保护模式的system读取。
-
-; NOTE! These had better be the same as in bootsect.s!
-; 以下这些参数最好和bootsect.s中的相同！
 #include <linux/config.h>
-; config.h中定义了DEF_INITSEG = 0x9000，DEF_SYSSEG = 0x1000，DEF_SETUPSEG = 0x9020。
-INITSEG  = DEF_INITSEG	! we move boot here - out of the way
-SYSSEG   = DEF_SYSSEG	! system loaded at 0x10000 (65536).
-SETUPSEG = DEF_SETUPSEG	! this is the current segment
+INITSEG  = DEF_INITSEG	; we move boot here - out of the way 0x9000
+SYSSEG   = DEF_SYSSEG	; system loaded at 0x10000 (65536). 0x1000
+SETUPSEG = DEF_SETUPSEG	; this is the current segment 0x9020
 
 .globl begtext, begdata, begbss, endtext, enddata, endbss
 .text
@@ -35,11 +26,9 @@ begbss:
 entry start
 start:
 
-! ok, the read went well so we get current cursor position and save it for
-! posterity.
+; ok, the read went well so we get current cursor position and save it for posterity.
 ; ok，整个读磁盘过程都正常，现在将光标位置保存以备今后使用。
-
-	mov	ax,#INITSEG		! this is done in bootsect already, but...
+	mov	ax,#INITSEG		; this is done in bootsect already, but...
 						; 这已经在bootsect程序中设置过ds，但是...
 	mov	ds,ax
 
@@ -61,13 +50,13 @@ start:
 ; 0x90090	; 16;	第2个硬盘的参数表	  ;
 ; 0x901FC	; 2 ;	根文件系统所在的设备号（bootsec.s中设置）;
 
-! Get memory size (extended mem, kB) 
+; Get memory size (extended mem, kB)
 ;;; 取从0x100000（1M）处开始的扩展内存大小（KB）
 	mov	ah,#0x88
 	int	0x15
 	mov	[2],ax
 
-! check for EGA/VGA and some config parameters 
+; check for EGA/VGA and some config parameters
 ;;; 检查EGA/VGA和一些配置参数
 	mov	ah,#0x12
 	mov	bl,#0x10
@@ -77,7 +66,7 @@ start:
 	mov	[12],cx
 	; 检测屏幕当前行列值。若显示卡是VGA卡，则请求用户选择显示行列值
 	mov	ax,#0x5019  ; 预设行列值(ah = 80列，al = 25行)
-	cmp	bl,#0x10 
+	cmp	bl,#0x10
 	je	novga
 	call	chsvga
 novga:	
@@ -88,7 +77,7 @@ novga:
 	int	0x10		! save it in known place, con_init fetches
 	mov	[0],dx		! it from 0x90000.
 	
-! Get video-card data:
+; Get video-card data:
 ;;; 取显示卡当前显示模式
 	mov	ah,#0x0f
 	int	0x10
@@ -595,7 +584,7 @@ skip10:	mov	al,ah
 	pop	ax
 	ret
 
-! Part of above routine, this one just prints ascii al
+; Part of above routine, this one just prints ascii al
 
 prnt1:	push	ax
 	push	cx
@@ -607,7 +596,7 @@ prnt1:	push	ax
 	pop	ax
 	ret
 
-! Prints <CR> + <LF>
+; Prints <CR> + <LF>
 
 docr:	push	ax
 	push	cx
@@ -664,7 +653,7 @@ idcandt:	.byte	0xa5
 idgenoa:	.byte	0x77, 0x00, 0x66, 0x99
 idparadise:	.ascii	"VGA="
 
-! Manufacturer:	  Numofmodes:	Mode:
+; Manufacturer:	  Numofmodes:	Mode:
 ; 厂家：			模式数量：		模式列表：
 moati:		.byte	0x02,	0x23, 0x33 
 moahead:	.byte	0x05,	0x22, 0x23, 0x24, 0x2f, 0x34
@@ -677,7 +666,7 @@ motrident:	.byte	0x07,	0x50, 0x51, 0x52, 0x57, 0x58, 0x59, 0x5a
 motseng:	.byte	0x05,	0x26, 0x2a, 0x23, 0x24, 0x22
 movideo7:	.byte	0x06,	0x40, 0x43, 0x44, 0x41, 0x42, 0x45
 
-!			msb = Cols lsb = Rows:
+;			msb = Cols lsb = Rows:
 ;			高字节 = 列数 低字节 = 行数
 dscati:		.word	0x8419, 0x842c
 dscahead:	.word	0x842c, 0x8419, 0x841c, 0xa032, 0x5042

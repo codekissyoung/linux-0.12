@@ -1,31 +1,12 @@
 /*
- * This file has definitions for some important file table
- * structures etc.
- */
-/*
  * 本文件含有某些重要文件表结构的定义等。
  */
-
 #ifndef _FS_H
 #define _FS_H
-
 #include <sys/types.h>
 
-/* devices are as follows: (same as minix, so we can use the minix
- * file system. These are major numbers.)
- *
- * 0 - unused (nodev)
- * 1 - /dev/mem
- * 2 - /dev/fd
- * 3 - /dev/hd
- * 4 - /dev/ttyx
- * 5 - /dev/tty
- * 6 - /dev/lp
- * 7 - unnamed pipes
- */
 /*
  * 系统所含的设备如下：(与minix系统的一样，所以我们可以使用minix的文件系统。以下这些是主设备号。)
- *
  * 0 - unused (nodev)	没有用到
  * 1 - /dev/mem			内存设备
  * 2 - /dev/fd			软盘设备
@@ -42,10 +23,8 @@
 /* 块设备操作类型 */
 #define READ 	0		/* 读 */
 #define WRITE 	1		/* 写 */
-#define READA 	2		/* read-ahead - don't pause */
-						/* 预读 */
-#define WRITEA 	3		/* "write-ahead" - silly, but somewhat useful */
-						/* 预写 */
+#define READA 	2		/* 预读 - don't pause */
+#define WRITEA 	3		/* 预写 - silly, but somewhat useful */
 
 void buffer_init(long buffer_end);			/* 高速缓冲区初始化 */
 

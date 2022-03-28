@@ -1,8 +1,6 @@
 include Rules.make
 
-#
 # if you want the ram-disk device, define this to be the size in blocks.
-#
 RAMDISK = #-DRAMDISK=512
 
 # -0: 使用16bit代码段　

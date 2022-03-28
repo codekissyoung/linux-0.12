@@ -63,7 +63,6 @@
  *
  * #define HD_TYPE { h,s,c,wpcom,lz,ctl },{ h,s,c,wpcom,lz,ctl }
  */
-
 /*
  This is an example, two drives, first is type 2, second is type 3:
 #define HD_TYPE { 4,17,615,300,615,8 }, { 6,17,615,300,615,0 }
@@ -72,12 +71,10 @@
  If you want the BIOS to tell what kind of drive you have, just
  leave HD_TYPE undefined. This is the normal thing to do.
 */
-
 /*
  * 下面是一个例子，两个硬盘，第1个是类型2，第2个是类型3：
  * #define HD_TYPE { 4,17,615,300,615,8 }, { 6,17,615,300,615,0 }
  * 注：对应所有硬盘，若其磁头数<=8，则ctl等于0，若磁头数多于8个，则ctl=8。
  * 如果你想让BIOS给出硬盘的类型，那么只需不定义HD_TYPE。这是默认操作。
  */
-
 #endif

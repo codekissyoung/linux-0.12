@@ -1,12 +1,13 @@
-! SYS_SIZE is the number of clicks (16 bytes) to be loaded.
-! 0x3000 is 0x30000 bytes = 196kB, more than enough for current
-! versions of linux
-; SYS_SIZE是要加载的系统模块长度的节数（每节有16b）。0x3000节就等
-; 于0x30000bytes=192KB，对于当前的版本空间已足够了。
+; 需要用 as86 编译本文件,　生产16位的代码(实模式下)
 
-; 该头文件里定义了内核用到的一些常数符号和Linus自己使用的默认硬盘默认参数块。
+; SYS_SIZE is the number of clicks(节) (16 bytes) to be loaded.
+; 0x3000 is 0x30000 bytes = 196KB
+; more than enough for current versions of linux
+; SYS_SIZE是要加载的系统模块长度的节数（每节有16b）。0x3000节就等于0x30000bytes=192KB
+
+; 该头文件里定义了内核用到的一些常数符号和Linus自己使用的默认硬盘默认参数块
+
 #include <linux/config.h>
-
 SYSSIZE = DEF_SYSSIZE 	; 系统模块大小为0x3000节
 
 !

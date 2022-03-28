@@ -13,8 +13,7 @@
 #define UTS_VERSION "0.12"
 #define UTS_MACHINE "i386"      /* hardware type */
 
-/* Don't touch these, unless you really know what your doing. */
-/* 请不要随意修改下面定义值，除非你知道自己正在干什么。 */
+/* Don't touch these, unless you really know what you are doing. */
 #define DEF_INITSEG	    0x9000  /* 引导扇区程序将被移动到的段位置 */
 #define DEF_SYSSEG	    0x1000  /* 系统模块被加载到内存的段位置 */
 #define DEF_SETUPSEG	0x9020  /* setup程序代码的段位置 */
@@ -67,22 +66,17 @@
 
 /*
  This is an example, two drives, first is type 2, second is type 3:
-
 #define HD_TYPE { 4,17,615,300,615,8 }, { 6,17,615,300,615,0 }
-
  NOTE: ctl is 0 for all drives with heads<=8, and ctl=8 for drives
  with more than 8 heads.
-
  If you want the BIOS to tell what kind of drive you have, just
  leave HD_TYPE undefined. This is the normal thing to do.
 */
+
 /*
  * 下面是一个例子，两个硬盘，第1个是类型2，第2个是类型3：
- *
  * #define HD_TYPE { 4,17,615,300,615,8 }, { 6,17,615,300,615,0 }
- *
  * 注：对应所有硬盘，若其磁头数<=8，则ctl等于0，若磁头数多于8个，则ctl=8。
- *
  * 如果你想让BIOS给出硬盘的类型，那么只需不定义HD_TYPE。这是默认操作。
  */
 

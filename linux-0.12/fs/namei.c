@@ -1,17 +1,6 @@
-/*
- *  linux/fs/namei.c
- *
- *  (C) 1991  Linus Torvalds
- */
-
-/*
- * Some corrections by tytso.
- */
-
 #include <linux/sched.h>
 #include <linux/kernel.h>
 #include <asm/segment.h>
-
 #include <string.h>
 #include <fcntl.h>
 #include <errno.h>
@@ -36,8 +25,6 @@ static struct m_inode * _namei(const char * filename, struct m_inode * base,
 /*
  * comment out this line if you want names > NAME_LEN chars to be
  * truncated. Else they will be disallowed.
- */
-/*
  * 如果想让文件名长度 > NAME_LEN个的字符被截掉，就将下面定义注释掉。
  */
 /* #define NO_TRUNCATE */
@@ -512,7 +499,6 @@ struct m_inode * _namei(const char * pathname, struct m_inode * base,
     return inode;
 }
 
-
 /**
  * 取指定路径名的i节点，不跟随符号链接
  * @param[in]	pathname	路径名
@@ -525,7 +511,6 @@ struct m_inode * lnamei(const char * pathname)
 
 /*
  *	namei()
- *
  * is used by most simple commands to get the inode of a specified name.
  * Open, link etc use their own routines, but this is enough for things
  * like 'chmod' etc.
@@ -548,7 +533,6 @@ struct m_inode * namei(const char * pathname)
 
 /*
  *	open_namei()
- *
  * namei for open - this is in fact almost the whole open-routine.
  */
 /*

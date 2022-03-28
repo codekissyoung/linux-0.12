@@ -1,10 +1,7 @@
-!
-!	setup.s		(C) 1991 Linus Torvalds
-!
-! setup.s is responsible for getting the system data from the BIOS,
-! and putting them into the appropriate places in system memory.
-! both setup.s and system has been loaded by the bootblock.
-!
+; setup.s is responsible for getting the system data from the BIOS,
+; and putting them into the appropriate places in system memory.
+; both setup.s and system has been loaded by the bootblock.
+
 ! This code asks the bios for memory/disk/other parameters, and
 ! puts them in a "safe" place: 0x90000-0x901FF, ie where the
 ! boot-block used to be. It is then up to the protected mode
@@ -17,9 +14,8 @@
 ; 这段代码询问bios有关内存/磁盘/其它参数，并将这些参数放到一个“安全的”地
 ; 方：0x90000 - 0x901FF，也即原来bootsect代码块曾经在的地方，然后在被缓冲
 ; 块覆盖掉之前由保护模式的system读取。
-!
 
-! NOTE! These had better be the same as in bootsect.s!
+; NOTE! These had better be the same as in bootsect.s!
 ; 以下这些参数最好和bootsect.s中的相同！
 #include <linux/config.h>
 ; config.h中定义了DEF_INITSEG = 0x9000，DEF_SYSSEG = 0x1000，DEF_SETUPSEG = 0x9020。

@@ -4,17 +4,13 @@
  * NOTE!!! Startup happens at absolute address 0x00000000, which is also where
  * the page directory will exist. The startup code will be overwritten by
  * the page directory.
- */
-/*
  * head.s含有32位启动代码。
- *
  * 注意!!! 32位启动代码是从绝对地址0x00000000开始的，这里也同样是保存页目录的地方，因此这里
  * 的启动代码将在之后被页目录覆盖掉。
- *
  */
 .text
 .globl idt, gdt, pg_dir, tmp_floppy_area
-/***** 页目录表（0x00000000）将会存放在这里 *****/
+# ***** 页目录表（0x00000000）将会存放在这里 *****/
 pg_dir:
 
 # head.s主要做了四件事：
@@ -327,7 +323,7 @@ idt_descr:
     .word 256 * 8 - 1				# idt contains 256 entries
     .long idt
 
-.align 4    # 这个对齐貌似多余
+.align 4
 
 .word 0
 gdt_descr:

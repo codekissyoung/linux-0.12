@@ -20,7 +20,7 @@
     # 1. 从docker hub中拉取镜像
     docker pull ultraji/ubuntu-xfce-novnc
     # 2. 运行容器
-    docker run -t -i -p 6080:6080 -v ${本地项目路径}:${容器内项目路径} ultraji/ubuntu-xfce-novnc
+    docker run -t -i -p 6080:6080 -v /home/cky/workspace/linux-0.12:/linux-0.12 ultraji/ubuntu-xfce-novnc
     ```
 
     或docker-compose方式

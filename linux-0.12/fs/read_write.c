@@ -1,13 +1,6 @@
-/*
- *  linux/fs/read_write.c
- *
- *  (C) 1991  Linus Torvalds
- */
-
 #include <sys/stat.h>
 #include <errno.h>
 #include <sys/types.h>
-
 #include <linux/kernel.h>
 #include <linux/sched.h>
 #include <asm/segment.h>

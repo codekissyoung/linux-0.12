@@ -8,8 +8,7 @@
 #include <sys/stat.h>
 
 /* 由文件名查找对应i节点的内部函数 */
-static struct m_inode * _namei(const char * filename, struct m_inode * base,
-    int follow_links);
+static struct m_inode * _namei(const char * filename, struct m_inode * base, int follow_links);
 
 // 例 "loveyou"[2] = 2["loveyou"] = *("loveyou"+2)= 'v'
 /* 下面是访问模式宏。x是头文件include/fcntl.h中行7行开始定义的文件访问(打开)标志。这个宏根据文
@@ -547,8 +546,7 @@ struct m_inode * namei(const char * pathname)
  * @param[in]	res_inode	返回对应文件路径名的i节点指针
  * @retval		成功返回0，失败返回出错码
  */
-int open_namei(const char * pathname, int flag, int mode,
-    struct m_inode ** res_inode)
+int open_namei(const char * pathname, int flag, int mode, struct m_inode ** res_inode)
 {
     const char * basename;
     int inr,dev,namelen;
@@ -755,9 +753,6 @@ int sys_mkdir(const char * pathname, int mode)
     return 0;
 }
 
-/*
- * routine to check that the specified directory is empty (for rmdir)
- */
 static int empty_dir(struct m_inode * inode)
 {
     int nr,block;
@@ -1007,7 +1002,6 @@ int sys_symlink(const char * oldname, const char * newname)
 /**
  * 为文件建立一个文件名目录项
  * @brief 为一个已存在的文件创建一个新链接（也称为硬连接 - hard link）
- * 
  * @param 	oldname	原路径名
  * @param 	newname 新路径名
  * @return 	成功返回0，失败返回出错号

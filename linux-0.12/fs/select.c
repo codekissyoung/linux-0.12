@@ -1,12 +1,5 @@
 /*
- * This file contains the procedures for the handling of select
- *
- * Created for Linux based loosely upon Mathius Lattner's minix
- * patches by Peter MacDonald. Heavily edited by Linus.
- */
-/*
  * 本文件含有处理select()系统调用的过程。
- *
  * 这是Peter MacDonald基于Mathius Lattner提供给MINIX系统的补丁程序修改而成。
  */
 
@@ -26,18 +19,6 @@
 #include <sys/time.h>
 #include <signal.h>
 
-/*
- * Ok, Peter made a complicated, but straightforward multiple_wait() function.
- * I have rewritten this, taking some shortcuts: This code may not be easy to
- * follow, but it should be free of race-conditions, and it's practical. If you
- * understand what I'm doing here, then you understand how the linux sleep/wakeup
- * mechanism works.
- *
- * Two very simple procedures, add_wait() and free_wait() make all the work. We
- * have to have interrupts disabled throughout the select, but that's not really
- * such a loss: sleeping automatically frees interrupts when we aren't in this
- * task.
- */
 /*
  * OK，Peter编制了复杂但很直观的多个_wait()函数。我对这些函数进行了改写，以使之更简洁：这些代码
  * 可能不容易看懂，但是其中应该不会存在竞争条件问题，并且很实际。如果你能理解这里编制的代码，那么

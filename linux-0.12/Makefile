@@ -1,6 +1,4 @@
 include Rules.make
-
-# if you want the ram-disk device, define this to be the size in blocks.
 RAMDISK = #-DRAMDISK=512
 
 # -0: 使用16bit代码段　
@@ -24,19 +22,15 @@ CC	+= $(RAMDISK)
 # -O: 对代码进行优化
 # -fstrength-reduce: 优化循环语句
 # -fomit-frame-pointer: 对无需帧指针的函数不要把帧指针保留在寄存器中
-# -fcombine-regs(去除): 不再被gcc支持
-# -mstring-insns(去除): Linus本人增加的选项(gcc中没有)
 # -fno-builtin(新增): 阻止gcc会把没有参数的printf优化成puts
 CFLAGS	= -g -Wall -O -fstrength-reduce -fomit-frame-pointer -fno-builtin
 
 # -Iinclude: 通过-I指定在该项目的include文件夹中搜索
 CPP	+= -Iinclude
 
-#
 # ROOT_DEV specifies the default root-device when making the image.
 # This can be either FLOPPY, /dev/xxxx or empty, in which case the
 # default of /dev/hd6 is used by 'build'.
-#
 ROOT_DEV= #/dev/hd6
 SWAP_DEV= #/dev/hd2
 

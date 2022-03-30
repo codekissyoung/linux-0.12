@@ -157,10 +157,10 @@ load_setup:
     int	0x13
     j	load_setup 		; j - jmp
 
-ok_load_setup:
 
 ; Get disk drive parameters, specifically nr of sectors/track
 ; 这段代码取磁盘驱动器的参数，特别是每道的扇区数量，并保存在位置sectors处。
+ok_load_setup:
     xor	dl,dl
     mov	ah,#0x08        ; AH=8 is get drive parameters
     int	0x13
@@ -348,7 +348,6 @@ bad_rt:
  *	ax
  *	error
  *	ret <- sp
- *
 */
 ; print_all 用于调试目的，前提是从一个子程序中调用。栈帧结构如上所示
 print_all:
@@ -386,11 +385,7 @@ print_nl:
     int 	0x10
     ret
 
-/*
- *	print_hex is for debugging purposes, and prints the word
- *	pointed to by ss:bp in hexadecmial.
-*/
-/* 子程序print_hex用于调试目的.它使用十六进制在屏幕上显示出ss:bp指向的字 */
+; 子程序print_hex用于调试目的.它使用十六进制在屏幕上显示出ss:bp指向的字
 print_hex:
     mov	cx, #4      ; 4 hex digits
     mov	dx, (bp)    ; load word into dx
@@ -411,11 +406,9 @@ good_digit:
     loop	print_digit
     ret
 
-/*
- * This procedure turns off the floppy drive motor, so
- * that we enter the kernel in a known state, and
- * don't have to worry about it later.					'
- */
+; This procedure turns off the floppy drive motor, so
+; that we enter the kernel in a known state, and
+; don't have to worry about it later.					'
 ; 这个子程序用于关闭软驱的马达，这样我们进入内核后它处于已知状态，以后也就无须担心它了。
 kill_motor:
     push dx
